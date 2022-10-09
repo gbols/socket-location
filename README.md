@@ -6,7 +6,11 @@
 # socket-location-boilerplate
 A boilerplate for express.js to get started with using Socket.io and and NodeJS.
 
+<<<<<<< HEAD
 ## Getting Started 
+=======
+## Getting Started
+>>>>>>> started files to get you started so you can code along
 
 ```bash
 # Clone the repository
