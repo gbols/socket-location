@@ -34,6 +34,11 @@ userRouter.post("/login", async (req, res, next) => {
     body: { email, password },
   } = req;
   const user = await db.User.findOne({ where: { email, password } });
+  if (!user)
+    res
+      .status(404)
+      .send({ success: true, message: "invalid email or password" });
+
   const token = handleJwt.signToken(user.dataValues);
 
   res.status(200).send({
