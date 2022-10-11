@@ -1,6 +1,7 @@
 const userRoute = require("./user/user");
+const trackRoute = require("./track/tracker");
 
-const allRoutes = [userRoute];
+const allRoutes = [userRoute, trackRoute];
 
 const initializeRoutes = (app) => {
   allRoutes.forEach((router) => {

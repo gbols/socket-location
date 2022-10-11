@@ -6,9 +6,16 @@ const userRouter = Router();
 
 userRouter.post("/signup", async (req, res, next) => {
   const {
-    body: { firstName, lastName, email, password },
+    body: { firstName, lastName, email, password, role },
   } = req;
-  const user = await db.User.create({ firstName, lastName, email, password });
+  const user = await db.User.create({
+    firstName,
+    lastName,
+    email,
+    password,
+    role,
+  });
+  await db.Geolocation.create({ id: user.id });
   const token = handleJwt.signToken(user.dataValues);
 
   res.status(201).send({
@@ -35,7 +42,7 @@ userRouter.post("/login", async (req, res, next) => {
   } = req;
   const user = await db.User.findOne({ where: { email, password } });
   if (!user)
-    res
+    return res
       .status(404)
       .send({ success: true, message: "invalid email or password" });
 
@@ -60,8 +67,8 @@ userRouter.put(
       oldUser,
     } = req;
 
-    if (id !== oldUser.id)
-      res.status(403).send({
+    if (id != oldUser.id)
+      return res.status(403).send({
         success: false,
         message: "You are not authorized to carry out this action",
       });

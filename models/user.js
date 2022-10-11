@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.hasOne(models.Geolocation, { foreignKey: "id" });
     }
   }
   User.init(
@@ -24,6 +25,14 @@ module.exports = (sequelize, DataTypes) => {
       email: {
         type: DataTypes.STRING,
         unique: true,
+      },
+      role: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          isIn: [["user", "driver"]],
+        },
+        defaultValue: "user",
       },
       password: {
         type: DataTypes.STRING,

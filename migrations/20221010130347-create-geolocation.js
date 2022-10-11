@@ -2,27 +2,35 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Users", {
+    await queryInterface.createTable("Geolocations", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
+        references: {
+          model: "Users",
+          key: "id",
+          as: "id",
+        },
       },
-      firstName: {
+      socketID: {
         type: Sequelize.STRING,
+        unique: true,
       },
-      lastName: {
-        type: Sequelize.STRING,
+      location: {
+        type: Sequelize.GEOMETRY,
       },
-      email: {
-        type: Sequelize.STRING,
+      online: {
+        type: Sequelize.BOOLEAN,
       },
-      role: {
-        type: Sequelize.STRING,
-      },
-      password: {
-        type: Sequelize.STRING,
+      trackerID: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Users",
+          key: "id",
+          as: "id",
+        },
       },
       createdAt: {
         allowNull: false,
@@ -35,6 +43,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Users");
+    await queryInterface.dropTable("Geolocations");
   },
 };
